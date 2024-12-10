@@ -4,11 +4,10 @@ import { Platform } from "react-native";
 import { MD3DarkTheme, MD3LightTheme } from "react-native-paper";
 import { darkColors, lightColors } from "@/constants/Theme";
 import { HapticTab } from "@/components/HapticTab";
-import { IconSymbol } from "@/components/ui/IconSymbol";
 import { Ionicons } from "@expo/vector-icons";
 import TabBarBackground from "@/components/ui/TabBarBackground";
 import { useColorScheme } from "@/hooks/useColorScheme";
-import { LogoutModal } from "../login/LogoutModal";
+import LogoutModal from "../login/LogoutModal";
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
@@ -30,8 +29,20 @@ export default function TabLayout() {
       <Tabs
         screenOptions={{
           tabBarActiveTintColor: colorstoapply.colors.primary,
-          headerStyle: { backgroundColor: colorstoapply.colors.background },
+          headerStyle: {
+            backgroundColor: colorstoapply.colors.background,
+            elevation: 4,
+            shadowColor: "#000",
+            shadowOffset: { width: 0, height: 2 },
+            shadowOpacity: 0.1,
+            shadowRadius: 4,
+          },
+
           headerTintColor: colorstoapply.colors.primary,
+          headerTitleStyle: {
+            fontSize: 24,
+            fontWeight: "bold",
+          },
           headerShown: true,
           tabBarButton: HapticTab,
           tabBarBackground: TabBarBackground,
@@ -58,9 +69,9 @@ export default function TabLayout() {
         <Tabs.Screen
           name="index"
           options={{
-            title: "Inicio",
+            title: "Clientes",
             tabBarIcon: ({ color }) => (
-              <IconSymbol size={28} name="house.fill" color={color} />
+              <Ionicons size={28} name="people-outline" color={color} />
             ),
           }}
         />

@@ -1,11 +1,10 @@
-import React from "react";
 import { StyleSheet } from "react-native";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
-import { Modal, Portal, Button } from "react-native-paper";
+import { Modal, Portal, Button, useTheme } from "react-native-paper";
 import { useRouter } from "expo-router";
 
-export const LogoutModal = ({
+const LogoutModal = ({
   visible,
   onClose,
 }: {
@@ -18,20 +17,32 @@ export const LogoutModal = ({
     onClose();
     router.replace("/login");
   };
+  const { colors } = useTheme();
+
+  const dynamicStyles = StyleSheet.create({
+    modalContainer: {
+      backgroundColor: colors.surface,
+    },
+  });
 
   return (
     <Portal>
       <Modal
         visible={visible}
         onDismiss={onClose}
-        contentContainerStyle={styles.modalContainer}
+        contentContainerStyle={[
+          styles.modalContainer,
+          dynamicStyles.modalContainer,
+        ]}
       >
         <ThemedText style={styles.modalText}>¿Cerrar sesión?</ThemedText>
-        <ThemedView style={styles.buttonContainer}>
+        <ThemedView
+          style={[styles.buttonContainer, dynamicStyles.modalContainer]}
+        >
           <Button onPress={onClose} mode="text">
             Cancelar
           </Button>
-          <Button onPress={logout} mode="text" textColor="black">
+          <Button onPress={logout} mode="text" textColor={colors.onBackground}>
             Salir
           </Button>
         </ThemedView>
@@ -42,7 +53,6 @@ export const LogoutModal = ({
 
 const styles = StyleSheet.create({
   modalContainer: {
-    backgroundColor: "white",
     width: "80%",
     padding: 20,
     marginHorizontal: 40,
@@ -67,3 +77,5 @@ const styles = StyleSheet.create({
     width: "100%",
   },
 });
+
+export default LogoutModal;
